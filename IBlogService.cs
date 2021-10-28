@@ -9,11 +9,11 @@ namespace Lab4
     {
         // PostTypes
         [OperationContract]
-        [WebGet (UriTemplate = "/PostTypes", ResponseFormat = WebMessageFormat.Xml)]
+        [WebGet (UriTemplate = "/PostTypes", ResponseFormat = WebMessageFormat.Json)]
         IEnumerable<PostTypeDTO> GetPostTypes();
 
         [OperationContract]
-        [WebGet (UriTemplate = "/PostTypes/{postTypeId}", ResponseFormat = WebMessageFormat.Xml)]
+        [WebGet (UriTemplate = "/PostTypes/{postTypeId}", ResponseFormat = WebMessageFormat.Json)]
         PostTypeDTO GetPostType(string postTypeId);
 
         [OperationContract]
@@ -31,11 +31,11 @@ namespace Lab4
 
         // Posts
         [OperationContract]
-        [WebGet (UriTemplate = "/Posts", ResponseFormat = WebMessageFormat.Xml)]
+        [WebGet (UriTemplate = "/Posts", ResponseFormat = WebMessageFormat.Json)]
         IEnumerable<PostDTO> GetPosts();
 
         [OperationContract]
-        [WebGet (UriTemplate = "/Posts/{postId}", ResponseFormat = WebMessageFormat.Xml)]
+        [WebGet (UriTemplate = "/Posts/{postId}", ResponseFormat = WebMessageFormat.Json)]
         PostDTO GetPost(string postId);
 
         [OperationContract]

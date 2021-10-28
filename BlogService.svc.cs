@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace Lab4
 {
-    [DataContract (IsReference = true)]
+    [DataContract]
     public class PostTypeDTO
     {
         [DataMember]
@@ -13,6 +13,7 @@ namespace Lab4
         public string PostTypeName { get; set; }
     }
 
+    [DataContract]
     public class PostDTO
     {
         [DataMember]
@@ -28,10 +29,10 @@ namespace Lab4
     {
         public IEnumerable<PostTypeDTO> GetPostTypes()
         {
-            using (WCFServiceDataContext dataContext = new WCFServiceDataContext())
+            using (var dataContext = new WCFServiceDataContext())
             {
-                List<PostTypeDTO> list = new List<PostTypeDTO>();
-                foreach (PostType pt in dataContext.PostType)
+                var list = new List<PostTypeDTO>();
+                foreach (var pt in dataContext.PostType)
                 {
                     list.Add(new PostTypeDTO() { PostTypeID = pt.PostTypeID, PostTypeName = pt.PostTypeName });
                 }
@@ -41,9 +42,9 @@ namespace Lab4
 
         public PostTypeDTO GetPostType(string postTypeId)
         {
-            using (WCFServiceDataContext dataContext = new WCFServiceDataContext())
+            using (var dataContext = new WCFServiceDataContext())
             {
-                PostType pt = dataContext.PostType.FirstOrDefault(a => a.PostTypeID.ToString() == postTypeId);
+                var pt = dataContext.PostType.FirstOrDefault(a => a.PostTypeID.ToString() == postTypeId);
                 if(pt != null)
                 {
                     return new PostTypeDTO() { PostTypeID = pt.PostTypeID, PostTypeName = pt.PostTypeName };
@@ -54,9 +55,9 @@ namespace Lab4
         }
         public int AddPostType(string postTypeName)
         {
-            using (WCFServiceDataContext dataContext = new WCFServiceDataContext())
+            using (var dataContext = new WCFServiceDataContext())
             {
-                PostType pt = dataContext.PostType.FirstOrDefault(a => a.PostTypeName == postTypeName);
+                var pt = dataContext.PostType.FirstOrDefault(a => a.PostTypeName == postTypeName);
                 if (pt == null)
                 {
                     pt = new PostType();
@@ -71,9 +72,9 @@ namespace Lab4
         }
         public void UpdatePostType(string postTypeId, string postTypeName)
         {
-            using (WCFServiceDataContext dataContext = new WCFServiceDataContext())
+            using (var dataContext = new WCFServiceDataContext())
             {
-                PostType pt = dataContext.PostType.FirstOrDefault(a => a.PostTypeID.ToString() == postTypeId);
+                var pt = dataContext.PostType.FirstOrDefault(a => a.PostTypeID.ToString() == postTypeId);
                 if (pt != null)
                 {
                     pt.PostTypeName = postTypeName;
@@ -84,9 +85,9 @@ namespace Lab4
 
         public void DeletePostType(string postTypeId)
         {
-            using (WCFServiceDataContext dataContext = new WCFServiceDataContext())
+            using (var dataContext = new WCFServiceDataContext())
             {
-                PostType pt = dataContext.PostType.FirstOrDefault(a => a.PostTypeID.ToString() == postTypeId);
+                var pt = dataContext.PostType.FirstOrDefault(a => a.PostTypeID.ToString() == postTypeId);
                 if (pt != null)
                 {
                     dataContext.PostType.DeleteOnSubmit(pt);
@@ -97,10 +98,10 @@ namespace Lab4
 
         public IEnumerable<PostDTO> GetPosts()
         {
-            using (WCFServiceDataContext dataContext = new WCFServiceDataContext())
+            using (var dataContext = new WCFServiceDataContext())
             {
-                List<PostDTO> list = new List<PostDTO>();
-                foreach (Post p in dataContext.Post)
+                var list = new List<PostDTO>();
+                foreach (var p in dataContext.Post)
                 {
                     list.Add(new PostDTO() { PostHeader = p.PostHeader, PostID = p.PostID, PostText = p.PostText, PostTypeID = p.PostTypeID });
                 }
@@ -110,9 +111,9 @@ namespace Lab4
 
         public PostDTO GetPost(string postId)
         {
-            using (WCFServiceDataContext dataContext = new WCFServiceDataContext())
+            using (var dataContext = new WCFServiceDataContext())
             {
-                Post p = dataContext.Post.FirstOrDefault(a => a.PostID.ToString() == postId);
+                var p = dataContext.Post.FirstOrDefault(a => a.PostID.ToString() == postId);
                 if(p != null)
                 {
                     return new PostDTO() { PostHeader = p.PostHeader, PostID = p.PostID, PostText = p.PostText, PostTypeID = p.PostTypeID };
@@ -124,12 +125,12 @@ namespace Lab4
 
         public int AddPost(string postHeader, string postText, string postTypeId)
         {
-            using (WCFServiceDataContext dataContext = new WCFServiceDataContext())
+            using (var dataContext = new WCFServiceDataContext())
             {
-                PostType pt = dataContext.PostType.FirstOrDefault(a => a.PostTypeID.ToString() == postTypeId);
+                var pt = dataContext.PostType.FirstOrDefault(a => a.PostTypeID.ToString() == postTypeId);
                 if (pt != null)
                 {
-                    Post p = new Post();
+                    var p = new Post();
                     p.PostHeader = postHeader;
                     p.PostText = postText;
                     p.PostTypeID = short.Parse(postTypeId);
@@ -143,9 +144,9 @@ namespace Lab4
 
         public void UpdatePost(string postId, string postHeader, string postText, string postTypeId)
         {
-            using (WCFServiceDataContext dataContext = new WCFServiceDataContext())
+            using (var dataContext = new WCFServiceDataContext())
             {
-                Post p = dataContext.Post.FirstOrDefault(a => a.PostID.ToString() == postId);
+                var p = dataContext.Post.FirstOrDefault(a => a.PostID.ToString() == postId);
                 p.PostHeader = postHeader;
                 p.PostText = postText;
                 p.PostTypeID = short.Parse(postTypeId);
@@ -155,9 +156,9 @@ namespace Lab4
 
         public void DeletePost(string postId)
         {
-            using (WCFServiceDataContext dataContext = new WCFServiceDataContext())
+            using (var dataContext = new WCFServiceDataContext())
             {
-                Post p = dataContext.Post.FirstOrDefault(a => a.PostID.ToString() == postId);
+                var p = dataContext.Post.FirstOrDefault(a => a.PostID.ToString() == postId);
                 if (p != null)
                 {
                     dataContext.Post.DeleteOnSubmit(p);
